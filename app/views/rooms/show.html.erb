@@ -3,31 +3,20 @@
 </div>
 <h2><%= current_user.name %>とのチャット</h2>
 
- <div class="chats">
-  <div class="chat">
-    <% if @messages.present? %>
-      <% @messages.each do |m| %>
-      　<% if m.user_id == current_user.id %>
-      　 <div class="mycomment">
-      　   <p><%= m.message %></p>
-  　　 　 　</div>
-　　　  <% else %>
- 　　    　<div class= "fukidasi" >
- 　　　   　  <div class= "faceicon" >
- 　　　　      <%= m.message %>
-  　       </div>
-         </div>
-        <% end %>
-      <% end %>
+<div class="message" style="width: 400px;">
+  <% @messages.each do |m| %>
+    <% if m.user_id == current_user.id %>
+      <p style="text-align: right;"><%= m.message %></p>
+    <% else %>
+      <p style="text-align: left;"><%= m.message %></p>
     <% end %>
-   </div>
+  <% end %>
+</div>
+
    <div class="posts">
-    <%= form_with model:@message, local: true do |f| %>
+    <%= form_with model:@message, data: {remote: true} do |f| %>
       <%= f.text_field :message, class:"form-text-field" %>
         <%= f.hidden_field :room_id, value: @room.id %>
-          <%= f.submit "送信",class: 'form-submit'%>
     <% end %>
   </div>
- </div>
-
 
